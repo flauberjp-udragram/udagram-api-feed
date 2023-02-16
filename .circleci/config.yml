@@ -19,9 +19,9 @@ jobs:
           docker_layer_caching: true
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
-          docker build -t flauberjp/udagram-api-feed:$TAG .
+          docker build -t flauberjp/udagram-api-feed:$TAG -t flauberjp/udagram-api-feed:latest .
           echo $DOCKER_PASSWORD | docker login -u flauberjp --password-stdin
-          docker push flauberjp/udagram-api-feed:$TAG
+          docker push flauberjp/udagram-api-feed --all-tags
 
 workflows:
   my-workflow:
