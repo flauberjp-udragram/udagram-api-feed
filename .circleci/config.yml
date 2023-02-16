@@ -1,0 +1,29 @@
+version: 2.1
+
+orbs:
+  docker: circleci/docker@1.7.0
+
+jobs:
+  my-job:
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
+        auth:
+          username: flauberjp
+          password: $DOCKER_PASSWORD # context / project UI env-var reference
+    steps:
+      - checkout
+      #- docker/install-docker
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          docker build -t flauberjp/udagram-api-feed:$TAG .
+          echo $DOCKER_PASSWORD | docker login -u flauberjp --password-stdin
+          docker push flauberjp/udagram-api-feed:$TAG
+
+workflows:
+  my-workflow:
+    jobs:
+      - my-job
