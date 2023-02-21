@@ -3,6 +3,18 @@ import { config } from "./config/config";
 
 const c = config.postgres;
 
+console.log(
+  "postgres credentials:",
+  "username: ",
+  c.username,
+  ", password:",
+  c.password,
+  ", database:",
+  c.database,
+  ", host:",
+  c.host
+);
+
 // Instantiate new Sequelize instance!
 export const sequelize = new Sequelize({
   username: c.username,
