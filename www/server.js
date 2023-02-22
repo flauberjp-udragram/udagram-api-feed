@@ -36,6 +36,9 @@ const model_index_1 = require("./controllers/v0/model.index");
     app.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.send("/api/v0/");
     }));
+    app.get("/health", (req, res, _next) => __awaiter(void 0, void 0, void 0, function* () {
+        res.send({ status: "UP" });
+    }));
     // Start the Server
     app.listen(port, () => {
         console.log(`server running http://localhost:${port}`);
