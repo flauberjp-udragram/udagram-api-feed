@@ -38,6 +38,10 @@ import { V0MODELS } from "./controllers/v0/model.index";
     res.send("/api/v0/");
   });
 
+  app.get("/health", async (req, res, _next) => {
+    res.send({ status: "UP" });
+  });
+
   // Start the Server
   app.listen(port, () => {
     console.log(`server running http://localhost:${port}`);
