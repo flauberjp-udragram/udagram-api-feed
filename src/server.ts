@@ -26,7 +26,7 @@ import { V0MODELS } from "./controllers/v0/model.index";
     );
     res.header(
       "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+      "Origin, X-Requested-With, Content-Type, Accept, Authorization, CorrelationId"
     );
     next();
   });
