@@ -7,16 +7,14 @@ const router: Router = Router();
 
 // Get all feed items
 router.get("/", async (req: Request, res: Response) => {
+  console.log(
+    new Date().toLocaleString(),
+    "headers",
+    JSON.stringify(req.headers),
+    "requested all feed items"
+  );
   const items = await FeedItem.findAndCountAll({ order: [["id", "DESC"]] });
   items.rows.map((item) => {
-    console.log(
-      "CorrelationId",
-      req.headers["CorrelationId"],
-      "item.caption",
-      item.caption,
-      "item url",
-      item.url
-    );
     if (item.url) {
       item.url = AWS.getGetSignedUrl(item.url);
     }
