@@ -26,7 +26,6 @@ export const s3 = new AWS.S3({
  *    a url as a string
  */
 export function getGetSignedUrl(key: string): string {
-  console.log("credentials, from getGetSignedUrl:", AWS.config.credentials);
   const signedUrlExpireSeconds = 60 * 5;
   const param = {
     Bucket: c.aws_media_bucket,
@@ -46,7 +45,6 @@ export function getGetSignedUrl(key: string): string {
  *    a url as a string
  */
 export function getPutSignedUrl(key: string) {
-  console.log("credentials, from getPutSignedUrl:", AWS.config.credentials);
   const signedUrlExpireSeconds = 60 * 5;
   const param = {
     Bucket: c.aws_media_bucket,
