@@ -8,19 +8,16 @@ orbs:
 jobs:
   my-job:
     docker:
-      # replace with your preferred image
       - image: cimg/base:stable
         auth:
           username: flauberjp
           password: $DOCKER_PASSWORD # context / project UI env-var reference
     steps:
-      - checkout
-      #- docker/install-docker
       - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
       - run: |
-          docker build -t flauberjp/udagram-api-feed:$CIRCLE_BUILD_NUM -t flauberjp/udagram-api-feed:latest .
+          docker build -t flauberjp/udagram-api-feed:$pipeline.number -t flauberjp/udagram-api-feed:latest .
           echo $DOCKER_PASSWORD | docker login -u flauberjp --password-stdin
           docker push flauberjp/udagram-api-feed --all-tags
       - aws-eks/update-kubeconfig-with-authenticator:
@@ -34,6 +31,6 @@ workflows:
       - aws-eks/update-container-image:
           cluster-name: MyEKSCluster
           resource-name: deployment/backend-feed
-          container-image-updates: "backend-feed=flauberjp/udagram-api-feed:${CIRCLE_BUILD_NUM}"
+          container-image-updates: "backend-feed=flauberjp/udagram-api-feed:${pipeline.number}"
           requires:
             - my-job
