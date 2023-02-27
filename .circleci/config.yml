@@ -25,7 +25,7 @@ jobs:
           docker push flauberjp/udagram-api-feed --all-tags
   update-container-imag:
     steps:
-       - update-kubeconfig-with-authenticator:
+      - update-kubeconfig-with-authenticator:
           cluster-name: MyEKSCluster
           install-kubectl: true
       - aws-eks/update-container-image:
