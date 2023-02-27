@@ -23,8 +23,6 @@ jobs:
           docker build -t flauberjp/udagram-api-feed:$TAG -t flauberjp/udagram-api-feed:latest .
           echo $DOCKER_PASSWORD | docker login -u flauberjp --password-stdin
           docker push flauberjp/udagram-api-feed --all-tags
-  update-container-imag:
-    steps:
       - update-kubeconfig-with-authenticator:
           cluster-name: MyEKSCluster
           install-kubectl: true
@@ -37,4 +35,3 @@ workflows:
   my-workflow:
     jobs:
       - my-job
-      - update-container-imag
