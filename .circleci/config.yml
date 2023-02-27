@@ -27,12 +27,14 @@ jobs:
       - aws-eks/update-kubeconfig-with-authenticator:
           cluster-name: MyEKSCluster
           install-kubectl: true
-      - aws-eks/update-container-image:
-          cluster-name: MyEKSCluster
-          resource-name: deployment/backend-feed
-          container-image-updates: "flauberjp/udagram-api-feed=flauberjp/udagram-api-feed:latest"
 
 workflows:
   my-workflow:
     jobs:
       - my-job
+      - aws-eks/update-container-image:
+          cluster-name: MyEKSCluster
+          resource-name: deployment/backend-feed
+          container-image-updates: "flauberjp/udagram-api-feed=flauberjp/udagram-api-feed:latest"
+          requires:
+            - my-job
