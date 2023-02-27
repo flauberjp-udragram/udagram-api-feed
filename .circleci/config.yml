@@ -31,6 +31,6 @@ workflows:
       - aws-eks/update-container-image:
           cluster-name: MyEKSCluster
           resource-name: deployment/backend-feed
-          container-image-updates: "backend-feed=flauberjp/udagram-api-feed:<< pipeline.number >>"
+          container-image-updates: "backend-feed=flauberjp/udagram-api-feed:latest"
           requires:
             - my-job
