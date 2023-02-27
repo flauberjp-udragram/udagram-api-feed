@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   docker: circleci/docker@1.7.0
+  kubernetes: circleci/kubernetes@1.3
 
 jobs:
   my-job:
@@ -22,8 +23,18 @@ jobs:
           docker build -t flauberjp/udagram-api-feed:$TAG -t flauberjp/udagram-api-feed:latest .
           echo $DOCKER_PASSWORD | docker login -u flauberjp --password-stdin
           docker push flauberjp/udagram-api-feed --all-tags
+  update-container-imag: 
+    steps:
+       - update-kubeconfig-with-authenticator:
+          cluster-name: MyEKSCluster
+          install-kubectl: true
+      - aws-eks/update-container-image:
+          cluster-name: MyEKSCluster
+          resource-name: deployment/backend-feed
+          container-image-updates: "flauberjp/udagram-api-feed=flauberjp/udagram-api-feed:latest"
 
 workflows:
   my-workflow:
     jobs:
       - my-job
+      - update-container-imag
