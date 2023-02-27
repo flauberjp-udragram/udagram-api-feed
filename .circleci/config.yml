@@ -20,9 +20,7 @@ jobs:
           version: 20.10.14
           docker_layer_caching: true
       - run: |
-          set -e TAG=0.1.$CIRCLE_BUILD_NUM
-          echo "export TAG='$TAG'" >> $BASH_ENV
-          docker build -t flauberjp/udagram-api-feed:$TAG -t flauberjp/udagram-api-feed:latest .
+          docker build -t flauberjp/udagram-api-feed:0.1.$CIRCLE_BUILD_NUM -t flauberjp/udagram-api-feed:latest .
           echo $DOCKER_PASSWORD | docker login -u flauberjp --password-stdin
           docker push flauberjp/udagram-api-feed --all-tags
       - aws-eks/update-kubeconfig-with-authenticator:
@@ -37,6 +35,6 @@ workflows:
           cluster-name: MyEKSCluster
           resource-name: deployment/backend-feed
           container-image-updates: "backend-feed=flauberjp/udagram-api-feed"
-          tag: "${TAG}"
+          tag: "0.1.$CIRCLE_BUILD_NUM"
           requires:
             - my-job
